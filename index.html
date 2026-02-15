@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mira - Style Assistant</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Main webcam view -->
+    <div class="webcam-container">
+      <video id="webcam" autoplay playsinline></video>
+      <canvas id="snapshot" style="display: none;"></canvas>
+      
+      <!-- User speech bubble (shows what they're saying) -->
+      <div class="user-speech-bubble" id="user-speech-bubble" style="display: none;">
+        <p id="user-text"></p>
+      </div>
+      
+      <div class="controls">
+        <button id="analyze-btn" class="btn-primary">👁️ Show Outfit</button>
+        <button id="talk-btn" class="btn-secondary">🎤 Talk to Mira</button>
+      </div>
+    </div>
+
+    <!-- Mira avatar panel -->
+    <div class="mira-panel">
+      <div class="avatar-container" id="mira-avatar-container">
+        <!-- Videos will be dynamically added here -->
+        <div class="state-indicator" id="state-indicator">loading</div>
+      </div>
+      <div class="speech-bubble" id="speech-bubble">
+        <p id="mira-text">Loading...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Voice input indicator -->
+  <div class="voice-indicator" id="voice-indicator">
+    <div class="pulse"></div>
+    <span>Listening...</span>
+  </div>
+
+  <script src="src/config.js"></script>
+  <script src="src/avatar.js"></script>
+  <script src="src/webcam.js"></script>
+  <script src="src/gemini.js"></script>
+  <script src="src/tts.js"></script>
+  <script src="src/tts-elevenlabs.js"></script>
+  <script src="src/speech-input.js"></script>
+  <script src="src/app.js"></script>
+</body>
+</html>
