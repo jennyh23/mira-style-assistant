@@ -2,7 +2,7 @@
 const CONFIG = {
   // Gemini API for outfit analysis
   GEMINI_API_KEY: 'AIzaSyDVQ2IzaSE1_AZsAIJPM7G40SzP2tjrWgc',
-  GEMINI_MODEL: 'gemini-2.0-flash',
+  GEMINI_MODEL: 'gemini-1.5-flash-latest',
   
   // ElevenLabs TTS (high quality voice) - get key at elevenlabs.io
   ELEVENLABS_API_KEY: 'sk_b011956e1f0de725a75818d9343b2aadee7a6b3eb395f7ce',
@@ -13,14 +13,14 @@ const CONFIG = {
   TTS_ENABLED: true,
   TTS_VOICE: 'en-US', // Browser TTS voice
   
-  // Avatar videos (looping animations)
+  // Avatar videos (looping animations - keyframe matched for seamless loops)
   AVATAR_VIDEOS: {
-    idle: 'assets/videos/idle.mp4',
-    thinking: 'assets/videos/thinking.mp4',
-    happy: 'assets/videos/happy.mp4',
-    excited: 'assets/videos/excited.mp4',
-    talking: 'assets/videos/talking.mp4',
-    concerned: 'assets/videos/concerned.mp4'
+    idle: 'assets/videos/idle_loop.mp4',
+    thinking: 'assets/videos/thinking_loop.mp4',
+    happy: 'assets/videos/happy_loop.mp4',
+    excited: 'assets/videos/excited_loop.mp4',
+    talking: 'assets/videos/talking_loop.mp4',
+    concerned: 'assets/videos/concerned_loop.mp4'
   },
   
   // Avatar states (fallback images)
