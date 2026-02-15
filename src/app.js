@@ -55,7 +55,7 @@ class MiraStyleAssistant {
     if (speechInput.supported) {
       speechInput.onStart = () => {
         this.voiceIndicator?.classList.add('active');
-        miraAvatar.thinking();
+        miraAvatar.idle(); // Show idle when user is talking
       };
       
       speechInput.onInterim = (text) => {
@@ -154,8 +154,7 @@ class MiraStyleAssistant {
       const response = await gemini.analyzeOutfit(imageData, userText);
       console.log('Response:', response);
       
-      const reactionState = miraAvatar.reactToResponse(response);
-      await this.deliverResponse(response, reactionState);
+      await this.deliverResponse(response);
       
     } catch (err) {
       console.error('Error:', err);
@@ -188,8 +187,7 @@ class MiraStyleAssistant {
       const response = await gemini.analyzeOutfit(imageData);
       console.log('Response:', response);
       
-      const reactionState = miraAvatar.reactToResponse(response);
-      await this.deliverResponse(response, reactionState);
+      await this.deliverResponse(response);
       
     } catch (err) {
       console.error('Analysis error:', err);
@@ -204,22 +202,39 @@ class MiraStyleAssistant {
     }
   }
 
-  async deliverResponse(text, reactionState) {
+  async deliverResponse(text) {
     this.showMessage(text);
     
-    if (reactionState === 'excited') {
-      miraAvatar.excited();
-    } else if (reactionState === 'happy') {
-      miraAvatar.happy();
-    } else if (reactionState === 'concerned') {
-      miraAvatar.concerned();
-    }
+    // Check for scripted response match
+    const scripted = findScriptedResponse(text);
     
-    await smartSpeak(
-      text,
-      () => miraAvatar.talking(),
-      () => miraAvatar.idle()
-    );
+    if (scripted) {
+      console.log('Using scripted response:', scripted.phrase);
+      // Play scripted video with baked-in audio
+      await miraAvatar.playScriptedVideo(scripted.video);
+    } else {
+      // No scripted match - use generic talking + TTS
+      console.log('Using dynamic response with TTS');
+      const emotion = detectEmotion(text);
+      
+      // Set initial emotion state
+      if (emotion === 'excited') {
+        miraAvatar.excited();
+      } else if (emotion === 'happy') {
+        miraAvatar.happy();
+      } else if (emotion === 'concerned') {
+        miraAvatar.concerned();
+      } else if (emotion === 'thinking') {
+        miraAvatar.thinking();
+      }
+      
+      // Speak with TTS while showing talking animation
+      await smartSpeak(
+        text,
+        () => miraAvatar.talking(),
+        () => miraAvatar.idle()
+      );
+    }
   }
 }
 
@@ -233,5 +248,10 @@ document.addEventListener('DOMContentLoaded', () => {
 window.debug = {
   testTTS: () => miraTTS.speak("Hey there! How's my outfit looking?"),
   testSpeech: () => speechInput.start(),
+  testScripted: (phrase) => {
+    const match = findScriptedResponse(phrase);
+    console.log('Scripted match:', match);
+    if (match) miraAvatar.playScriptedVideo(match.video);
+  },
   app: () => window.app,
 };
