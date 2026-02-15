@@ -2,7 +2,7 @@
 const CONFIG = {
   // Gemini API for outfit analysis
   GEMINI_API_KEY: 'AIzaSyDVQ2IzaSE1_AZsAIJPM7G40SzP2tjrWgc',
-  GEMINI_MODEL: 'gemini-pro-vision',
+  GEMINI_MODEL: 'gemini-2.0-flash',
   
   // ElevenLabs TTS (high quality voice) - get key at elevenlabs.io
   ELEVENLABS_API_KEY: 'sk_b011956e1f0de725a75818d9343b2aadee7a6b3eb395f7ce',
